@@ -35,10 +35,10 @@
 steps:
   #Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice2:latest', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest', '.']
   #Push the container image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice2:latest']
+    args: ['push', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice2/service1:latest']
 
 options: 
   logging: CLOUD_LOGGING_ONLY
