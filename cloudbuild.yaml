@@ -39,3 +39,6 @@ steps:
   #Push the container image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice2:latest']
+
+options: 
+  logging: CLOUD_LOGGING_ONLY
