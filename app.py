@@ -39,7 +39,7 @@ def calculate():
     file_name = data['file']
     product = data.get('product', '')
 
-    # Check if file exists
+    # Check if file exist
     file_path = os.path.join('../data', file_name)
     if not os.path.exists(file_path):
         return jsonify({"file": file_name, "error": "File not found."})
