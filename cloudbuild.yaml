@@ -1,37 +1,3 @@
-# steps:
-#   # Step 1: Build Container 1
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'gcr.io/dbms-lab-414417/container1', './container1']
-
-#   # Step 2: Build Container 2
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'gcr.io/dbms-lab-414417/container2', './container2']
-
-#   # Step 3: Push Container 1 to Container Registry
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['push', 'gcr.io/dbms-lab-414417/container1']
-
-#   # Step 4: Push Container 2 to Container Registry
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['push', 'gcr.io/dbms-lab-414417/container2']
-
-#   # Step 5: Deploy to Google Kubernetes Engine (GKE)
-#   - name: 'gcr.io/cloud-builders/kubectl'
-#     args:
-#       - 'apply'
-#       - '-f'
-#       - 'deployment-pvc.yaml'
-#     env:
-#       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-#       - 'CLOUDSDK_CONTAINER_CLUSTER=k8-assignment'
-
-# images:
-#   - 'gcr.io/dbms-lab-414417/container1'
-#   - 'gcr.io/dbms-lab-414417/container2'
-
-# options: 
-#   logging: CLOUD_LOGGING_ONLY
-
 steps:
   #Build the container image
   - name: 'gcr.io/cloud-builders/docker'
@@ -39,6 +5,25 @@ steps:
   #Push the container image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest']
+
+  #   #copying from google cloud storage
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args:
+      - 'cp'
+      - 'gs://deployment-kubectl/deployment.yaml'
+      - '/workspace/deployment.yaml'
+
+   #FOR GKE
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - '/workspace/deployment.yaml'
+
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster1'
 
 options: 
   logging: CLOUD_LOGGING_ONLY
