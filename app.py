@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-PERSISTENT_STORAGE_PATH = '../data'
+PERSISTENT_STORAGE_PATH = '/app/data'
 
 @app.route('/store-file', methods=['POST'])
 def store_file():
