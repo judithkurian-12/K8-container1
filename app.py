@@ -45,7 +45,7 @@ def calculate():
         return jsonify({"file": file_name, "error": "File not found."})
 
     # Send the request to Container 2
-    response = requests.post('http://k8-assignment-container2-service:7000/sum', json={"file": file_name, "product": product})
+    response = requests.post('http://localhost:7000/sum', json={"file": file_name, "product": product})
     return jsonify(response.json())
 
 if __name__ == '__main__':
