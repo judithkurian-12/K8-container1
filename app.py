@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-PERSISTENT_STORAGE_PATH = '/judith_PV_dir/'
+PERSISTENT_STORAGE_PATH = '/judith_PV_dir'
 
 @app.route('/store-file', methods=['POST'])
 def store_file():
@@ -40,7 +40,7 @@ def calculate():
     product = data.get('product', '')
 
     # Check if file exist
-    file_path = os.path.join('/judith_PV_dir/', file_name)
+    file_path = os.path.join('/judith_PV_dir', file_name)
     if not os.path.exists(file_path):
         return jsonify({"file": file_name, "error": "File not found."})
 
