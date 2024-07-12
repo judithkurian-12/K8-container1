@@ -1,29 +1,57 @@
+# steps:
+#   #Build the container image
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: ['build', '-t', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest', '.']
+#   #Push the container image to Artifact Registry
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: ['push', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest']
+
+#   #   #copying from google cloud storage
+#   - name: 'gcr.io/cloud-builders/gsutil'
+#     args:
+#       - 'cp'
+#       - 'gs://deployment-kubectl/deployment.yaml'
+#       - '/workspace/deployment.yaml'
+
+#    #FOR GKE
+#   - name: 'gcr.io/cloud-builders/kubectl'
+#     args:
+#       - 'apply'
+#       - '-f'
+#       - '/workspace/deployment.yaml'
+
+#     env:
+#       - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
+#       - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+#       - 'CLOUDSDK_CONTAINER_CLUSTER=k8cluster'
+
+# options: 
+#   logging: CLOUD_LOGGING_ONLY
+
+
 steps:
-  #Build the container image
+  # Docker build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest', '.']
-  #Push the container image to Artifact Registry
+    args: [ 'build', '-t', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest', '.' ]
+
+  # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest']
+    args: [
+      'push',
+      'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest'
+    ]
 
-  #   #copying from google cloud storage
-  - name: 'gcr.io/cloud-builders/gsutil'
-    args:
-      - 'cp'
-      - 'gs://deployment-kubectl/deployment.yaml'
-      - '/workspace/deployment.yaml'
-
-   #FOR GKE
+  # Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
-    args:
-      - 'apply'
-      - '-f'
-      - '/workspace/deployment.yaml'
-
+    args: [
+      'apply',
+      '-f',
+      'deployment1.yaml'
+    ]
     env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
       - 'CLOUDSDK_CONTAINER_CLUSTER=k8cluster'
+      - 'CLOUDSDK_CORE_PROJECT=DBMS Lab'
 
-options: 
-  logging: CLOUD_LOGGING_ONLY
+images:
+  - 'us-central1-docker.pkg.dev/dbms-lab-414417/microservice1/service1:latest'
