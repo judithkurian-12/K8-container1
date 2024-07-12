@@ -60,7 +60,6 @@ port = 6000
 
 def store_file_in_storage(file_name, data):
     #parent_dir = os.path.dirname(app.root_path)  # Get the parent directory of the application root
-    #data_dir = os.path.join(parent_dir, 'data')  # Get the path to the 'data' directory
     try:
         if not os.path.exists('/judith_PV_dir'):
             os.makedirs('/judith_PV_dir')
