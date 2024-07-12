@@ -49,7 +49,7 @@ steps:
       'deployment1.yaml'
     ]
     env:
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=k8cluster'
       - 'CLOUDSDK_CORE_PROJECT=dbms-lab-414417'
 
