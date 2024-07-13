@@ -14,7 +14,6 @@ def store_file_in_storage(file_name, data):
             file.write(data)
         return True
     except Exception as e:
-        print(e.message)  # Print the error for debugging purposes
         return False
 
 @app.route('/store-file', methods=['POST'])
@@ -45,15 +44,11 @@ def calculate():
     try:
         inputJSON = request.json
         file = inputJSON.get('file')
-        print(file)
         file_path = os.path.join('/judith_PV_dir', file)
-        print('file_path',file_path)
-        print(file == None)
         if file != None:
             if not os.path.exists(file_path):
                 return jsonify({"file": file, "error": "File not found."})
             elif os.path.exists(file_path):
-                print('calling container2')
                 response = requests.post('http://app2-service:7000/calculate', json=inputJSON)
                 return jsonify(response.json())
         else:
